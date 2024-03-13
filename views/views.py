@@ -1,13 +1,14 @@
 from flask import Flask, request, jsonify, abort
 from services.user_services import UserService
 from models.user_model import db
-from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:root@localhost/postgres'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 user_service = UserService()
+CORS(app)
 
 
 @app.route('/users', methods=['GET'])

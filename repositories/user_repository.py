@@ -1,3 +1,5 @@
+from flask import jsonify
+
 from models.user import User
 from models.user_model import user, db
 
@@ -7,8 +9,9 @@ class UserRepository:
 
     def create_user(self, id, username, email):
         user = User(id, username, email)
-        self.users[id] = user
-        return user
+        db.session.add(user)
+        db.session.commit()
+        return jsonify({'message': 'User added successfully'}), 201
 
     def get_user(self, id):
         return self.users.get(id)
